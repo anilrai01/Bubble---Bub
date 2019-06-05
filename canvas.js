@@ -17,9 +17,9 @@ var mouse = {
 	x: undefined,
 	y: undefined,
 }
+var numBubble = prompt("How many Bubbles you wanna see: ");
 
 var maxLimit = 45;
-
 
 window.addEventListener('resize', function(){
 	canvas.width = window.innerWidth;
@@ -88,7 +88,7 @@ var circleArray = [];
 function init(){
 	circleArray = [];
 
-	for(var i = 0; i< 600; i++){
+	for(var i = 0; i< numBubble; i++){
 		var rad = Math.random() * 10 + 1;
 		var x = Math.random() * (innerWidth - rad * 2) + rad;
 		var y = Math.random() * (innerHeight - rad * 2) + rad;
