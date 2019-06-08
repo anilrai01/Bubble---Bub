@@ -1,7 +1,7 @@
 var canvas = document.querySelector('canvas');
 
 canvas.width = window.innerWidth;
-canvas.height = window.innerWidth;
+canvas.height = window.innerHeight;
 
 var ctx = canvas.getContext('2d');
 
@@ -21,6 +21,11 @@ var numBubble = prompt("How many Bubbles you wanna see: ");
 
 var maxLimit = 45;
 
+function getDistance(x1,y1,x2,y2){
+	// console.log("Distance Called");
+	return Math.sqrt(Math.pow((x2 - x1),2) + Math.pow((y2 - y1),2));
+}
+
 window.addEventListener('resize', function(){
 	canvas.width = window.innerWidth;
 	canvas.height = window.innerHeight;
@@ -29,8 +34,8 @@ window.addEventListener('resize', function(){
 });
 
 window.addEventListener('mousemove', function(event){
-	mouse.x = event.x;
-	mouse.y = event.y;
+	mouse.x = event.clientX;
+	mouse.y = event.clientY;
 	// console.log(mouse);
 })
 
@@ -68,10 +73,16 @@ function Circle(x, y, radius, dx, dy){
 		this.x+=this.dx;
 		this.y+=this.dy; 
 
+		// console.log(mouse.x);
+
+
 		//Interraction
-		if(mouse.x - this.x < 70 && mouse.x - this.x > -70
-			&& mouse.y - this.y < 70 && mouse.y - this.y > -70){
-			
+		//Old Code
+		//  if(this.x - mouse.x < 50 && this.x - mouse.x > -50 && this.y - mouse.y < 50 && this.y - mouse.y > -50)
+
+		//Refactored Code
+		if(getDistance(mouse.x,mouse.y,this.x,this.y) < 70){
+			// console.log(mouse.x);
 			if(this.radius < maxLimit){
 				this.radius += 1;
 			}
@@ -82,7 +93,7 @@ function Circle(x, y, radius, dx, dy){
 
 		}
 }
-
+// console.log(mouse.x);
 var circleArray = [];
 
 function init(){
