@@ -6,18 +6,17 @@ canvas.height = window.innerHeight;
 var ctx = canvas.getContext('2d');
 
 var colorArray = [
-	'#E9E925',
-	'#FF0000',
-	'#6FF400',
-	'#450CFF',
-	'#FF00A6',
+	'#2C3E50',
+	'#E74C3C',
+	'#ECF0F1',
+	'#3498DB',
+	'#298089'
 ];
 
 var mouse = {
 	x: undefined,
 	y: undefined,
 }
-var numBubble = prompt("How many Bubbles you wanna see: ");
 
 var maxLimit = 45;
 
@@ -81,14 +80,16 @@ function Circle(x, y, radius, dx, dy){
 		//  if(this.x - mouse.x < 50 && this.x - mouse.x > -50 && this.y - mouse.y < 50 && this.y - mouse.y > -50)
 
 		//Refactored Code
-		if(getDistance(mouse.x,mouse.y,this.x,this.y) < 70){
-			// console.log(mouse.x);
-			if(this.radius < maxLimit){
-				this.radius += 1;
-			}
+		// 
+		var dist = getDistance(mouse.x, mouse.y, this.x, this.y);
+		// console.log(dist);
 
-		} else if(this.radius > this.minRadius){
-			this.radius -= 1;
+		if(dist < 70){
+			if(this.radius < maxLimit){
+				this.radius+=5;
+			}
+		}else if(this.radius > this.minRadius){
+			this.radius-=2;
 		}
 
 		}
@@ -99,13 +100,13 @@ var circleArray = [];
 function init(){
 	circleArray = [];
 
-	for(var i = 0; i< numBubble; i++){
-		var rad = Math.random() * 10 + 1;
+	for(var i = 0; i< 300; i++){
+		var rad = Math.random() * 10 + 5;
 		var x = Math.random() * (innerWidth - rad * 2) + rad;
 		var y = Math.random() * (innerHeight - rad * 2) + rad;
 
-		var dx = Math.random() * 2;
-		var dy = Math.random() * 2;
+		var dx = (Math.random() - 0.5) * 2;
+		var dy = (Math.random() - 0.5) * 2;
 
 		circleArray.push(new Circle(x, y,rad, dx, dy));
 	}
@@ -113,11 +114,14 @@ function init(){
 
 init();
 
+// console.log(circleArray);
+// console.log('hey 	');
+
 
 function animate(){
 	requestAnimationFrame(animate);
 	ctx.clearRect(0,0,innerWidth, innerHeight);
-
+	
 	for(var i =0 ; i<circleArray.length; i++){
 		circleArray[i].draw();
 	}
